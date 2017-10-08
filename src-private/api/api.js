@@ -20,7 +20,8 @@ let response = {
 // Get users
 router.get('/getUser', (req, res) => {
     console.log("USERS GET");
-    var response = "TESTING GET"
+    response.data = userData;
+    response.message = "Success";
     res.json(response);
 });
 router.put("/updateUser",(req,res)=>{

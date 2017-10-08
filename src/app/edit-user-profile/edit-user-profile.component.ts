@@ -10,15 +10,15 @@ export class EditUserProfileComponent implements OnInit {
   newUserDetails = {};
   keys = [];
   constructor() {
-    this.newUserDetails = new UserProfileComponent().userDetails
+    // this.newUserDetails = new UserProfileComponent().userDetails
   }
 
   ngOnInit() {
-    for (let i in this.newUserDetails) {
-      this.keys.push(i);
-    }
+    // for (let i in this.newUserDetails) {
+    //   this.keys.push(i);
+    // }
   }
   updateUserInfo() {
-    console.log('New User Details: ', this.newUserDetails);
+    // console.log('New User Details: ', this.newUserDetails);
   }
 }
