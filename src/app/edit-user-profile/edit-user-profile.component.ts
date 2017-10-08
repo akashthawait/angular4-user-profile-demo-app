@@ -7,14 +7,18 @@ import { UserProfileComponent } from '../user-profile/user-profile.component';
   styleUrls: ['./edit-user-profile.component.css']
 })
 export class EditUserProfileComponent implements OnInit {
-newUserDetails={};
-city="";
+  newUserDetails = {};
+  keys = [];
   constructor() {
-    this.newUserDetails =  new UserProfileComponent().userDetails
-   }
-   
-  ngOnInit() {   
-    console.log(this.city);    
+    this.newUserDetails = new UserProfileComponent().userDetails
   }
-  
+
+  ngOnInit() {
+    for (let i in this.newUserDetails) {
+      this.keys.push(i);
+    }
+  }
+  updateUserInfo() {
+    console.log('New User Details: ', this.newUserDetails);
+  }
 }
