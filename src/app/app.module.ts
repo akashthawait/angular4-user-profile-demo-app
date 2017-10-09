@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { AgmCoreModule } from '@agm/core';
 
 import { AppComponent } from './app.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
@@ -17,7 +18,7 @@ import { EditUserProfileService } from './edit-user-profile/edit-user-profile.se
     AppComponent,
     UserProfileComponent,
     EditUserProfileComponent
-  ],
+    ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -30,7 +31,11 @@ import { EditUserProfileService } from './edit-user-profile/edit-user-profile.se
       "path": "editProfile",
       "component": EditUserProfileComponent
     }
-    ])
+    ]),
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyBoO7rCO5c3z2CDAOcLiTf57oESEKs_DiM"
+    })
+    
   ],
   providers: [
     UserProfileService,

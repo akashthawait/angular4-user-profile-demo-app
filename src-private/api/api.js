@@ -4,7 +4,6 @@ const jsonfile = require('jsonfile');
 
 var userData = require('../db/users')
 var dbPath = __dirname+"/../db/users.json";
-console.log(dbPath);
 // Error handling
 const sendError = (err, res) => {
     response.status = 501;

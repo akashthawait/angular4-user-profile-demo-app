@@ -6,13 +6,15 @@
   <div class="h1 text-center">
     Angular 4 Demo App!
     <br>
-    <span class="h5">Click on the user profile icon to continue</span>      
+    <span class="h5">Click on the user profile icon to continue</span>
   </div>
   <hr>
   <br>
   <div class="container">
-  
     <router-outlet>
     </router-outlet>
+    <agm-map [latitude]="lat" [longitude]="lng">
+      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    </agm-map>
   </div>
 </div>

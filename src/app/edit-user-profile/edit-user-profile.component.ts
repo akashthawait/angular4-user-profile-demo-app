@@ -5,6 +5,7 @@ import { UserProfileComponent } from "../user-profile/user-profile.component"
 import { EditUserProfileService } from '../edit-user-profile/edit-user-profile.service';
 
 import {Router} from '@angular/router'
+
 @Component({
   selector: 'app-edit-user-profile',
   templateUrl: './edit-user-profile.component.html',
@@ -14,8 +15,8 @@ export class EditUserProfileComponent implements OnInit {
   newUserDetails = {};
   userDetails = {};
   keys = [];
-  constructor(private eups: EditUserProfileService) {
 
+  constructor(private eups: EditUserProfileService) {
   }
   ngOnInit() {
     this.getUserDetails((userDetails) => {
@@ -37,11 +38,12 @@ export class EditUserProfileComponent implements OnInit {
     this.eups.updateUserProfile(this.userDetails, (response) => {
       console.log("Response: ", response);
       if (response && response.status == 200 && response.message == "Success") {
-        window.location.href="http://localhost:5000"
+        window.location.href="/"
       }else{
-
+        alert("An error occurred while updating profile");
+        window.location.href="/"        
       }
     })
-
   }
+
 }
