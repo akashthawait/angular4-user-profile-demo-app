@@ -68,7 +68,6 @@ var AppComponent = (function () {
         var _this = this;
         this.http = http;
         this.gyms = [];
-        this.title = 'My first AGM project';
         this.lat = 51.678418;
         this.lng = 7.809007;
         this.zoom = 18;
