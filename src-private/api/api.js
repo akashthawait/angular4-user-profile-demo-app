@@ -3,6 +3,8 @@ const router = express.Router();
 const jsonfile = require('jsonfile');
 
 var userData = require('../db/users')
+var dbPath = __dirname+"/../db/users.json";
+console.log(dbPath);
 // Error handling
 const sendError = (err, res) => {
     response.status = 501;
@@ -24,11 +26,17 @@ router.get('/getUser', (req, res) => {
     response.message = "Success";
     res.json(response);
 });
-router.put("/updateUser",(req,res)=>{
-    console.log("USERS PUT"); 
-    console.log("req params", req.body);   
-    var response = "TESTING PUT"
-    res.json(response);
+router.put("/updateUser", (req, res) => {
+    console.log("USERS PUT");
+    console.log("req params", req.body);
+    jsonfile.writeFile(dbPath, req.body, { spaces: 2, EOL: '\r\n' }, function (err) {
+        if (err) {
+            response.message = err;
+        } else {
+            response.message = "Success"
+        }
+        res.json(response);
+    })
 })
 
 module.exports = router;

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UserProfileComponent } from '../user-profile/user-profile.component';
 
+import { UserProfileComponent } from "../user-profile/user-profile.component"
+
+import { EditUserProfileService } from '../edit-user-profile/edit-user-profile.service';
+
+import {Router} from '@angular/router'
 @Component({
   selector: 'app-edit-user-profile',
   templateUrl: './edit-user-profile.component.html',
@@ -8,17 +12,36 @@ import { UserProfileComponent } from '../user-profile/user-profile.component';
 })
 export class EditUserProfileComponent implements OnInit {
   newUserDetails = {};
+  userDetails = {};
   keys = [];
-  constructor() {
-    // this.newUserDetails = new UserProfileComponent().userDetails
+  constructor(private eups: EditUserProfileService) {
+
+  }
+  ngOnInit() {
+    this.getUserDetails((userDetails) => {
+      for (let i in userDetails) {
+        this.keys.push(i);
+      }
+    });
+  }
+  getUserDetails(cb) {
+    this.eups.getUserProfile((result) => {
+      if (result && result.status && result.status == 200 && result.data) {
+        this.userDetails = result.data;
+        cb(this.userDetails);
+      }
+    })
   }
 
-  ngOnInit() {
-    // for (let i in this.newUserDetails) {
-    //   this.keys.push(i);
-    // }
-  }
   updateUserInfo() {
-    // console.log('New User Details: ', this.newUserDetails);
+    this.eups.updateUserProfile(this.userDetails, (response) => {
+      console.log("Response: ", response);
+      if (response && response.status == 200 && response.message == "Success") {
+        window.location.href="http://localhost:5000"
+      }else{
+
+      }
+    })
+
   }
 }

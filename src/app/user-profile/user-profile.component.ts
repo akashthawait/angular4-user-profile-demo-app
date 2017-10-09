@@ -19,7 +19,6 @@ export class UserProfileComponent implements OnInit {
       for (let i in userDetails) {
         this.keys.push(i);
       }
-      console.log(this.keys);
     });
   }
   getUserDetails(cb) {
