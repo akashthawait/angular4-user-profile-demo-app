@@ -13,8 +13,15 @@
   <div class="container">
     <router-outlet>
     </router-outlet>
-    <agm-map [latitude]="lat" [longitude]="lng">
-      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-    </agm-map>
+    <br>
+    <div class="center container">
+      <span class="h3 text-center">Gyms Near Me</span>
+      <br>
+      <br>
+      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+        <agm-marker *ngFor="let gym of gyms" [latitude]="gym.geometry.location.lat" [longitude]="gym.geometry.location.lng"></agm-marker>
+      </agm-map>
+    </div>
+    <br>
   </div>
 </div>

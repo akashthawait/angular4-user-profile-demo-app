@@ -3,7 +3,7 @@ const router = express.Router();
 const jsonfile = require('jsonfile');
 
 var userData = require('../db/users')
-var dbPath = __dirname+"/../db/users.json";
+var dbPath = __dirname + "/../db/users.json";
 // Error handling
 const sendError = (err, res) => {
     response.status = 501;
@@ -36,6 +36,29 @@ router.put("/updateUser", (req, res) => {
         }
         res.json(response);
     })
+});
+router.get("/getNearByGym", (req, resp) => {
+    console.log("req params", req.query);
+    var apiUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + req.query.lat + ',' + req.query.lng + '&radius=' + req.query.radius + '&type=' + req.query.type + '&sensor=false&key=AIzaSyBoO7rCO5c3z2CDAOcLiTf57oESEKs_DiM';
+    console.log(apiUrl);
+    const https = require('https');
+    https.get(apiUrl,(res)=>{
+        var data = '';
+        res.on('data',(chunk)=>{
+            data += chunk;
+        });
+        res.on('end',()=>{
+            // console.log(JSON.parse(data));            
+            response.data = JSON.parse(data);
+            response.message = "Success";
+            resp.json(response);
+        })
+    }).on("error",(err)=>{
+        console.log(err)
+        response.message = "Error"
+        resp.json(response)
+    })
+    // https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +req.query.lat + ',' + req.query.lng + '&radius=radius&type=type&sensor=false&key=AIzaSyBoO7rCO5c3z2CDAOcLiTf57oESEKs_DiM
 })
 
 module.exports = router;

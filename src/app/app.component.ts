@@ -15,57 +15,33 @@ export class AppComponent {
   title: string = 'My first AGM project';
   lat: number = 51.678418;
   lng: number = 7.809007;
-  zoom = 12;
+  zoom = 18;
   constructor(private http: Http) {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
-        this.zoom = 12;
+        this.zoom = 18;
+        this.getGymLocation(this.lat, this.lng, (locations) => {
+          this.gyms = locations.data.results;
+          console.log(this.gyms);
+        });
       });
-      console.log(this.lat, this.lng);
-      this.getGymLocation((locations) => {
-        this.gyms = locations;
-        console.log("gym " + this.gyms)
-        console.log("gym length " + this.gyms.length)
-      });
-
     }
   }
 
-  getGymLocation(cb) {
-    this.getNearByGym().subscribe((data) => {
-      console.log("sucess " + JSON.stringify(data))
-      // cb(data.results)
+  getGymLocation(lat, lng, cb) {
+    this.getNearByGym(lat, lng).subscribe((data) => {
+      // console.log("success " + JSON.stringify(data))
+      cb(data);
     })
   }
-  getNearByGym() {
-    let apiUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
-    let data = {
-      key: 'AIzaSyBoO7rCO5c3z2CDAOcLiTf57oESEKs_DiM',
-      location: this.lat + ',' + this.lng,
-      radius: '10000',
-      sensor: 'false',
-      rankby: 'prominence',
-      types: 'gym|gyms'
-    };
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    // headers.append('Access-Control-Allow-Credentials', 'true');
-    // headers.append('Access-Control-Allow-Methods', '*');
-    // headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Accept', 'application/json');
-    headers.append('Access-Control-Allow-Methods', '*');
-    headers.append('Access-Control-Allow-Origin', '*');
-    headers.append('Access-Control-Allow-Headers', "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding");
-    let options = new RequestOptions({ headers: headers });
-    // return this.http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + this.lat + ',' + this.lng + '&radius=5000&type=gym&sensor=false&key=AIzaSyBoO7rCO5c3z2CDAOcLiTf57oESEKs_DiM', options)
-    //   .map((response) => {
-    //     response.json()
-    //   })
-    return this.http.post(apiUrl, data, options)
-      .map((data) => {
-        return data.json()
+  getNearByGym(lat, lng) {
+    console.log("Lat: ", lat, " Lng: ", lng);
+    let apiUrl = "http://localhost:5000/api/getNearByGym"
+    return this.http.get(apiUrl + '?lat=' + lat + '&lng=' + lng + '&radius=500&type=gym')
+      .map((response) => {
+        return response.json()
       })
-
   }
 }

@@ -17,7 +17,9 @@
         app.use('/api', api);
 
         // Send all other requests to the Angular app
-        app.get('*', cors(), (req, res) => {
+        app.get('*', (req, res) => {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             res.sendFile(path.join(__dirname, 'dist/index.html'));
         });
 
